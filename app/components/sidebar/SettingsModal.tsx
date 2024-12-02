@@ -83,7 +83,14 @@ const SettingsModal = ({ isOpen, onClose, currentUser }: ISettingsModal) => {
               />
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                  {" "}
+                  Email
+                </label>
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  {currentUser?.email}
+                </label>
+              </div>
+              <div>
+                <label className="block text-sm font-medium leading-6 text-gray-900">
                   Photo
                 </label>
                 <div className=" mt-2 flex items-center gap-x-3">

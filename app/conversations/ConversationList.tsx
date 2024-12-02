@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { IFullConversation } from "../types";
@@ -10,6 +10,9 @@ import { MdOutlineGroupAdd } from "react-icons/md";
 import ConversationBox from "./components/ConversationBox";
 import GroupChatModal from "./components/GroupChatModal";
 import { User } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { pusherClient } from "../libs/pusher";
+import { find } from "lodash";
 
 interface IConversationList {
   initialItems: IFullConversation[];
@@ -20,6 +23,56 @@ const ConversationList = ({ initialItems, users }: IConversationList) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
   const { conversationId, isOpen } = useConversation();
+  const session = useSession();
+  const pusherKey = useMemo(() => {
+    return session?.data?.user?.email;
+  }, [session?.data?.user?.email]);
+
+  useEffect(() => {
+    if (!pusherKey) {
+      return;
+    }
+    const newHandler = (conversation: IFullConversation) => {
+      setItems((current) => {
+        if (find(current, { id: conversation.id })) {
+          return current;
+        }
+        return [conversation, ...current];
+      });
+    };
+    const updateHandler = (conversation: IFullConversation) => {
+      setItems((current) =>
+        current?.map((currentConversation) => {
+          if (currentConversation.id === conversation.id) {
+            return {
+              ...currentConversation,
+              messages: conversation.messages,
+            };
+          }
+          return currentConversation;
+        })
+      );
+    };
+    const deleteHandler = (conversation: IFullConversation) => {
+      setItems((current) => [
+        ...current.filter((convo) => convo.id !== conversation.id),
+      ]);
+      if (conversation.id === conversationId) {
+        router.push("/conversations");
+      }
+    };
+    pusherClient.subscribe(pusherKey);
+    pusherClient.bind("conversation:new", newHandler);
+    pusherClient.bind("conversation:update", updateHandler);
+    pusherClient.bind("conversation:delete", deleteHandler);
+    return () => {
+      pusherClient.unsubscribe(pusherKey);
+      pusherClient.unbind("conversation:new", newHandler);
+      pusherClient.unbind("conversation:update", updateHandler);
+      pusherClient.unbind("conversation:delete", deleteHandler);
+    };
+  }, [pusherKey, conversationId, router]);
+
   return (
     <>
       <GroupChatModal

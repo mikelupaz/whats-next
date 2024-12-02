@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import SnackbarContext from "./context/SnackbarContext";
 import AuthContext from "./context/AuthContext";
+import ActiveStatus from "./components/ActiveStatus";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <AuthContext>
           <SnackbarContext />
+          <ActiveStatus />
           {children}
         </AuthContext>
       </body>

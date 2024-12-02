@@ -40,6 +40,7 @@ const ConversationBox = ({ data, selected }: IConversationBox) => {
     if (!userEmail) {
       return false;
     }
+
     return seenData.filter((user) => user.email === userEmail).length !== 0;
   }, [userEmail, lastMessage]);
 
@@ -83,7 +84,7 @@ const ConversationBox = ({ data, selected }: IConversationBox) => {
           <p
             className={clsx(
               `truncate text-sm`,
-              hasSeen ? "text-gray-500" : "text-black font-medium"
+              hasSeen ? "text-gray-500" : "text-gray-700 font-bold"
             )}
           >
             {lastMessageText}
