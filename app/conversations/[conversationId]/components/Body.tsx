@@ -16,7 +16,11 @@ const Body = ({ initialMessages }: IBody) => {
   useEffect(() => {
     fetch(`/api/conversations/${conversationId}/seen`, {
       method: "POST",
-    });
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
   }, [conversationId]);
   return (
     <div className="flex-1 overflow-y-auto">

@@ -1,10 +1,11 @@
 import Avatar from "@/app/components/Avatar";
+import ImageModal from "@/app/components/ImageModal";
 import { IFullMessage } from "@/app/types";
 import clsx from "clsx";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 interface IMessageBox {
   isLast?: boolean;
@@ -12,6 +13,7 @@ interface IMessageBox {
 }
 const MessageBox = ({ isLast, data }: IMessageBox) => {
   const session = useSession();
+  const [imageModalOpen, setImageModalOpen] = useState(false);
 
   const isOwn = session?.data?.user?.email === data?.sender?.email;
 
@@ -19,7 +21,7 @@ const MessageBox = ({ isLast, data }: IMessageBox) => {
     ?.filter((user) => user?.email !== data?.sender?.email)
     ?.map((user) => user?.name)
     ?.join(",");
-
+  console.warn("seenList", seenList);
   const container = clsx("flex gap-3 p-4", isOwn && "justify-end");
   const avatar = clsx(isOwn && "order-2");
   const body = clsx("flex flex-col gap-2", isOwn && "items-end");
@@ -41,8 +43,14 @@ const MessageBox = ({ isLast, data }: IMessageBox) => {
           </div>
         </div>
         <div className={message}>
+          <ImageModal
+            src={data?.image}
+            isOpen={imageModalOpen}
+            onClose={() => setImageModalOpen(false)}
+          />
           {data.image ? (
             <Image
+              onClick={() => setImageModalOpen(true)}
               src={data?.image}
               alt={"image"}
               height="288"

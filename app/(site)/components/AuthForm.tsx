@@ -58,6 +58,7 @@ const AuthForm = () => {
         },
         body: JSON.stringify(data),
       })
+        .then((res) => res.json())
         .then((res) => {
           setIsLoading(false);
           if (res?.status === 200) {

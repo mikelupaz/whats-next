@@ -21,6 +21,7 @@ const ConfirmModal = ({ isOpen, onClose }: IConfirmModal) => {
   const onDelete = useCallback(() => {
     setIsLoading(true);
     fetch(`/api/conversations/${conversationId}`, { method: "Delete" })
+      .then((res) => res.json())
       .then(() => {
         router.push("/conversations");
         router.refresh();

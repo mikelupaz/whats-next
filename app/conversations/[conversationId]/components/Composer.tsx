@@ -40,7 +40,7 @@ const Composer = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ image: result?.info?.secure_url, conversationId }),
-    });
+    }).then((res) => res.json());
   };
   return (
     <div className="py-4 px-4 bg-white border-t flex items-center gap-2 lg:gap-4 w-full">
