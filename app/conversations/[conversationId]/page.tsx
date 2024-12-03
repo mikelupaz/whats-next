@@ -5,8 +5,11 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import Composer from "./components/Composer";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ConversationPage = async ({ params }: { params: any }) => {
+interface IParams {
+  conversationId: string;
+}
+
+const ConversationPage = async ({ params }: { params: Promise<IParams> }) => {
   const { conversationId } = await params;
   const conversation = await getConversationById(conversationId);
   const messages = await getMessages(conversationId);

@@ -21,7 +21,7 @@ const MessageBox = ({ isLast, data }: IMessageBox) => {
     ?.filter((user) => user?.email !== data?.sender?.email)
     ?.map((user) => user?.name)
     ?.join(",");
-  console.warn("seenList", seenList);
+
   const container = clsx("flex gap-3 p-4", isOwn && "justify-end");
   const avatar = clsx(isOwn && "order-2");
   const body = clsx("flex flex-col gap-2", isOwn && "items-end");

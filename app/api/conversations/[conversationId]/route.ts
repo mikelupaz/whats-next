@@ -3,8 +3,14 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function DELETE(_request: Request, { params }: { params: any }) {
+interface IParams {
+  conversationId: string;
+}
+
+export async function DELETE(
+  _request: Request,
+  { params }: { params: Promise<IParams> }
+) {
   try {
     const { conversationId } = await params;
     const currentUser = await getCurrentUser();

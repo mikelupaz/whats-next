@@ -35,7 +35,6 @@ export async function POST(request: Request) {
         },
       });
       newConversation.users.forEach((user) => {
-        console.warn("new", user.email);
         if (user.email) {
           pusherServer.trigger(user.email, "conversation:new", newConversation);
         }
@@ -74,7 +73,6 @@ export async function POST(request: Request) {
       },
     });
     newConversation.users.map((user) => {
-      console.warn("new", user.email);
       if (user.email) {
         pusherServer.trigger(user.email, "conversation:new", newConversation);
       }

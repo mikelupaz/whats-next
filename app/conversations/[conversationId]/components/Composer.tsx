@@ -32,7 +32,6 @@ const Composer = () => {
   };
 
   const handleSuccessUpload = (result: any) => {
-    console.warn("result", result);
     fetch("/api/messages", {
       method: "POST",
       headers: {

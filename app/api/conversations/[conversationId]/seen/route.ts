@@ -3,8 +3,14 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function POST(request: Request, { params }: { params: any }) {
+interface IParams {
+  conversationId: string;
+}
+
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<IParams> }
+) {
   try {
     const currentUser = await getCurrentUser();
     const { conversationId } = await params;

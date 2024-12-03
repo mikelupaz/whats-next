@@ -96,13 +96,16 @@ const ConversationList = ({ initialItems, users }: IConversationList) => {
               <MdOutlineGroupAdd size={18} />
             </div>
           </div>
-          {items?.map((item) => (
-            <ConversationBox
-              key={item?.id}
-              data={item}
-              selected={conversationId === item?.id}
-            />
-          ))}
+
+          {items?.map((item) => {
+            return (
+              <ConversationBox
+                key={item?.id}
+                data={item}
+                selected={conversationId === item?.id}
+              />
+            );
+          })}
         </div>
       </aside>
     </>
