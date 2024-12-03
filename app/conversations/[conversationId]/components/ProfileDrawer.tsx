@@ -1,7 +1,6 @@
 "use client";
 
 import Avatar from "@/app/components/Avatar";
-import Modal from "@/app/components/Modal";
 import useOtherUser from "@/app/hooks/useOtherUser";
 
 import {
@@ -27,7 +26,10 @@ const ProfileDrawer = ({ data, isOpen, onClose }: IProfileDrawer) => {
   const otherUser = useOtherUser(data);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const { members } = useActiveList();
-  const isActive = members.indexOf(otherUser?.email!) !== -1;
+
+  const isActive = useMemo(() => {
+    return otherUser?.email ? members?.indexOf(otherUser?.email) !== -1 : false;
+  }, [otherUser?.email, members]);
 
   const joinedDate = useMemo(() => {
     return format(new Date(otherUser.createdAt), "PP");
@@ -41,7 +43,7 @@ const ProfileDrawer = ({ data, isOpen, onClose }: IProfileDrawer) => {
       return `${data.users.length} members`;
     }
     return isActive ? "Active" : "Offline";
-  }, [data]);
+  }, [data, isActive]);
   return (
     <>
       <ConfirmModal

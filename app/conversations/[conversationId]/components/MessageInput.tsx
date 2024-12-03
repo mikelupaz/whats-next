@@ -12,7 +12,6 @@ interface IMessageInput {
 const MessageInput = ({
   id,
   register,
-  errors,
   required,
   placeholder,
   type,

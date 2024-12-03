@@ -3,6 +3,7 @@ import { User } from "@prisma/client";
 import Image from "next/image";
 import { CgProfile } from "react-icons/cg";
 import useActiveList from "../hooks/useActiveList";
+import { useMemo } from "react";
 
 interface IAvatar {
   user: User;
@@ -10,7 +11,10 @@ interface IAvatar {
 
 const Avatar = ({ user }: IAvatar) => {
   const { members } = useActiveList();
-  const isActive = members.indexOf(user?.email!) !== -1;
+
+  const isActive = useMemo(() => {
+    return user?.email ? members?.indexOf(user?.email) !== -1 : false;
+  }, [user?.email, members]);
 
   return (
     <div className="relative">

@@ -4,7 +4,6 @@ import Button from "@/app/components/Button";
 import Input from "@/app/components/inputs/Input";
 import Select from "@/app/components/inputs/Select";
 import Modal from "@/app/components/Modal";
-import useOtherUser from "@/app/hooks/useOtherUser";
 import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";

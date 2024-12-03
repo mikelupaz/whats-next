@@ -2,11 +2,9 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
-interface IParams {
-  conversationId?: string;
-}
 
-export async function POST(request: Request, { params }: { params: IParams }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function POST(request: Request, { params }: { params: any }) {
   try {
     const currentUser = await getCurrentUser();
     const { conversationId } = await params;
@@ -66,6 +64,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     );
 
     return NextResponse.json(updatedMessage);
+    //eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error: any) {
     return new NextResponse("Internal Error", { status: 500 });
   }

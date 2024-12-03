@@ -6,7 +6,6 @@ import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Modal from "../Modal";
-import Avatar from "../Avatar";
 import Input from "../inputs/Input";
 import Image from "next/image";
 import { CgProfile } from "react-icons/cg";

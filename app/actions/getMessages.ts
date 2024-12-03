@@ -16,6 +16,7 @@ const getMessages = async (conversationId: string) => {
       return [];
     }
     return messages;
+    //eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error: any) {
     return [];
   }

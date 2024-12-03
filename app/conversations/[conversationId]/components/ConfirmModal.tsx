@@ -28,7 +28,7 @@ const ConfirmModal = ({ isOpen, onClose }: IConfirmModal) => {
       })
       .catch(() => enqueueSnackbar("Unable to delete", { variant: "error" }))
       .finally(() => setIsLoading(false));
-  }, [conversationId, router, onClose]);
+  }, [conversationId, router]);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="sm:flex sm:items-start">

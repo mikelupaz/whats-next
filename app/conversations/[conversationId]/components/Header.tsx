@@ -20,7 +20,10 @@ const Header = ({ conversation }: IHeader) => {
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { members } = useActiveList();
-  const isActive = members.indexOf(otherUser?.email!) !== -1;
+
+  const isActive = useMemo(() => {
+    return otherUser?.email ? members?.indexOf(otherUser?.email) !== -1 : false;
+  }, [otherUser?.email, members]);
 
   const statusText = useMemo(() => {
     if (conversation?.isGroup) {

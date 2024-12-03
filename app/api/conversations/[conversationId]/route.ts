@@ -2,14 +2,9 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
-interface IParams {
-  conversationId?: string;
-}
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: IParams }
-) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function DELETE(_request: Request, { params }: { params: any }) {
   try {
     const { conversationId } = await params;
     const currentUser = await getCurrentUser();
@@ -45,6 +40,7 @@ export async function DELETE(
       }
     });
     return NextResponse.json(deleteConversation);
+    //eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error: any) {
     return new NextResponse("Internal Error", { status: 500 });
   }

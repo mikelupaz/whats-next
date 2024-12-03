@@ -15,7 +15,7 @@ const Body = ({ initialMessages }: IBody) => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const { conversationId } = useConversation();
 
-  const seeMessage = () => {
+  useEffect(() => {
     fetch(`/api/conversations/${conversationId}/seen`, {
       method: "POST",
       headers: {
@@ -23,10 +23,6 @@ const Body = ({ initialMessages }: IBody) => {
         "Content-Type": "application/json",
       },
     }).then((res) => res.json());
-  };
-
-  useEffect(() => {
-    seeMessage();
   }, [conversationId]);
 
   useEffect(() => {
@@ -34,7 +30,13 @@ const Body = ({ initialMessages }: IBody) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: IFullMessage) => {
-      seeMessage();
+      fetch(`/api/conversations/${conversationId}/seen`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json());
       setMessages((current) => {
         if (find(current, { id: message.id })) {
           return current;
