@@ -1,6 +1,6 @@
 ## About this project
 
-A sample messanger app developed using NextJs, Prisma, Monggodb, Pusher and Next-Auth
+A sample messanger app developed using NextJs, Prisma, Mongodb, Pusher and Next-Auth
 
 ## Deployed at
 
